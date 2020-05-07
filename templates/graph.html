@@ -61,7 +61,7 @@
             y.domain([0, d3.max(data, function (d) {
                 return d.amount;
             })]);
-            x.domain([0, d3.max(data, function (d) {
+            x.domain([1, d3.max(data, function (d) {
                 return d.date;
             })]);
             var valueline = d3.line()

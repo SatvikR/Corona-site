@@ -21,14 +21,11 @@
                 <input type="state" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="state" value="{{state}}">
                 </div>
                 <ul> 
-                    <!-- For loop logic of jinja template -->
-                    {%for i in range(0, len)%} 
-                      
+                    {% for i in range(0, len) %} 
                         <li>{{counties[i]}}</li> 
-                    {%endfor%} 
-                      
+                    {% endfor %} 
                 </ul> 
-                <button type="submit" name="submit" value="county" class="btn btn-primary">See Counties/Cities</button>
+                <button type="submit" name="submit" value="county" class="btn btn-primary">See Available Counties/Cities</button>
                 <button type="submit" name="submit" value="home" class="btn btn-primary">Back to Home</button>
             </form>
         </div>
