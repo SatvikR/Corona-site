@@ -26,6 +26,8 @@ def dump_data(state, county, file, x, y, json_file):
 @app.route('/', methods=["POST", "GET"])
 def home():
     if request.method == "POST":
+        if request.form['submit'] == 'county':
+            return redirect(url_for("counties"))
         state = request.form['state']
         county = request.form['county']
         print(state, county)
@@ -48,6 +50,24 @@ def send():
     x = dict_json['x']
     y = dict_json['y']
     return render_template("graph.html", state=dict_json['state'], county=dict_json['county'], json_data=dict_json, x=x, y=y)
+
+@app.route('/counties', methods=['POST', 'GET'])
+def counties():
+    counties = []
+    if request.method == "POST":
+        if request.form['submit'] == "home":
+            return redirect(url_for("home"))
+        file = corona.get_file(raw_data)
+        real_state = corona.check_state(request.form['state'], file)
+        if not real_state:
+            flash("Either your state was not found")
+            return redirect(url_for("counties"))
+
+        file = corona.get_file(raw_data)
+        counties = corona.get_counties(request.form['state'], file)
+        return render_template("counties.html", len=len(counties), counties=counties, state=request.form['state'])
+    else:
+        return render_template("counties.html", len=len(counties), counties=counties, state="")
 
 @app.route('/graph')
 def graph():

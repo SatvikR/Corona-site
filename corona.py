@@ -25,6 +25,14 @@ def print_counties(state, file):
             print(row['Admin2'])
 
 
+def get_counties(state, file):
+    counties = []
+    for row in file:
+        if row['Province_State'] == state:
+            counties.append(row['Admin2'])
+    return counties
+
+
 def check_county(state, county, file):
     for row in file:
         if row['Admin2'] == county:
