@@ -13,8 +13,19 @@
                 <button type="submit" name="submit" value="submit" class="btn btn-primary">Back to Home</button>
             </form>
             
-            <div id="scatter"></div>
         </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div id="scatter"></div>
+                </div>
+                <div class="col">
+                    <h3 id="current"></h3>
+                    <h3 id="max"></h3>
+                </div>
+            </div>
+        </div>
+        <div id="scatter"></div>
         <script>
             var data = [];
             var x = {{x}};
@@ -22,6 +33,11 @@
             var state = "{{state}}";
             var county = "{{county}}";
             var title = "Infected Citizens in " + county + ", " + state + " Over the Past 100 Days"
+            var max = Math.max(...y);
+            var current = y[y.length - 1];
+
+            document.getElementById("max").innerHTML = "Max: " + max + " infected citizens";
+            document.getElementById("current").innerHTML = "Currently there are " + current + " infected citizens";
 
             for (let i = 0; i < x.length; i++) {
                 data.push({
@@ -37,7 +53,7 @@
                 left: 40
             }
             // format the dat
-            width = 1000 - margin.left - margin.right;
+            width = 900 - margin.left - margin.right;
             height = 700 - margin.top - margin.bottom;
             var x = d3.scaleLinear().range([0, width]);
             var y = d3.scaleLinear().range([height, 0]);
