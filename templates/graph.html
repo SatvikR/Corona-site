@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
+        <title>Graph</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h1>Graph</h1>
+            <h2>State: {{state}}</h2>
+            <h2>County/City: {{county}}</h2>
+            <form action="#" method="post">
+                <button type="submit" name="submit" value="submit" class="btn btn-primary">Back to Home</button>
+            </form>
+            
+            <div id="scatter"></div>
+        </div>
+        <script>
+            var data = [];
+            var x = {{x}};
+            var y = {{y}};
+            var state = "{{state}}";
+            var county = "{{county}}";
+            var title = "Infected Citizens in " + county + ", " + state + " Over the Past 100 Days"
+
+            for (let i = 0; i < x.length; i++) {
+                data.push({
+                    date: x[i],
+                    amount: y[i]
+                });
+            }
+            console.log(data)
+            var margin = {
+                top: 42,
+                right: 20,
+                bottom: 30,
+                left: 40
+            }
+            // format the dat
+            width = 1000 - margin.left - margin.right;
+            height = 700 - margin.top - margin.bottom;
+            var x = d3.scaleLinear().range([0, width]);
+            var y = d3.scaleLinear().range([height, 0]);
+            // Scale the range of the data
+            y.domain([0, d3.max(data, function (d) {
+                return d.amount;
+            })]);
+            x.domain([0, d3.max(data, function (d) {
+                return d.date;
+            })]);
+            var valueline = d3.line()
+                .x(function (d) {
+                    return x(d.date);
+                })
+                .y(function (d) {
+                    return y(d.amount);
+                });
+            var svg = d3.select("#scatter").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            svg.append("path")
+                .data([data])
+                .attr("class", "line")
+                .attr("d", valueline)
+                //styling:
+                .attr("stroke", "#3e14d9")
+                .attr("stroke-width", 2)
+                .attr("fill", "#FFFFFF");
+            var path = svg.selectAll("dot")
+                .data(data)
+                .enter().append("circle")
+                .attr("r", 0)
+                .attr("cx", function (d) {
+                    return x(d.date);
+                })
+                .attr("cy", function (d) {
+                    return y(d.amount);
+                })
+                .attr("stroke", "#3e14d9")
+                .attr("stroke-width", 1.5)
+                .attr("fill", "#FFFFFF");
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+            svg.append("g")
+                .call(d3.axisLeft(y).tickFormat(function (d) {
+                    return d;
+                }));
+            svg.append("text")
+                .attr("x", (width / 2))             
+                .attr("y", 0 - (margin.top / 2))
+                .attr("text-anchor", "middle")  
+                .style("font-size", "20px") 
+                .style("text-decoration", "underline")  
+                .text(title);
+        </script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
+</html>
