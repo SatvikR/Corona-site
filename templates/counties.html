@@ -14,20 +14,26 @@
         {% endif %}
         {% endwith %}
         <div class="container-fluid">
-            <h1>Satvik's Corona Plotter</h1>
-            <form action="#" method="POST">
-                <div class="form-group">
-                <label for="exampleInputEmail1">State</label>
-                <input type="state" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="state" value="{{state}}">
+            <h1>Check Available Counties</h1>
+            <div class="row">
+                <div class="col">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                        <label for="exampleInputEmail1">State</label>
+                        <input type="state" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="state" value="{{state}}">
+                        </div>
+                        <button type="submit" name="submit" value="county" class="btn btn-primary">See Available Counties/Cities</button>
+                        <button type="submit" name="submit" value="home" class="btn btn-primary">Back to Home</button>
+                    </form>
                 </div>
-                <ul> 
-                    {% for i in range(0, len) %} 
-                        <li>{{counties[i]}}</li> 
-                    {% endfor %} 
-                </ul> 
-                <button type="submit" name="submit" value="county" class="btn btn-primary">See Available Counties/Cities</button>
-                <button type="submit" name="submit" value="home" class="btn btn-primary">Back to Home</button>
-            </form>
+                <div class="col">
+                    <ul> 
+                        {% for i in range(0, len) %} 
+                            <li>{{counties[i]}}</li> 
+                        {% endfor %} 
+                    </ul> 
+                </div>
+            </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
