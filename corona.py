@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import csv
 import requests
 
@@ -46,49 +45,18 @@ def check_state(state, file):
             return True
     return False
 
+def get_states(file):
+    states = []
+    for row in file:
+        if row['Province_State'] not in states:
+            states.append(row['Province_State'])
+    return states
 
-def main():
-    raw_data = (
-        "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv"
-    )
-
-    found_state = False
-
-    while not found_state:
+def create_dict(states, file, raw_data):
+    state_counties = {}
+    length = 0
+    for state in states:
         file = get_file(raw_data)
-        state = str(input("Please Choose a State: "))
-        found_state = check_state(state, file)
+        state_counties[state] = get_counties(state, file)
+    return state_counties
 
-    print_counties(state, file)
-
-    found_county = False
-
-    while not found_county:
-        file = get_file(raw_data)
-        county = input("Please Choose a County/Region from above: ")
-        found_county = check_county(state, county, file)
-    x = []
-    y = []
-
-    file = get_file(raw_data)
-    get_data(x, y, file, state, county)
-
-    fig_size = plt.rcParams["figure.figsize"]
-    fig_size[0] = 9
-    fig_size[1] = 9
-    plt.rcParams["figure.figsize"] = fig_size
-
-    plt.scatter(x, y)
-    plt.plot(x, y)
-
-    plt.ylabel("Infected Citizens")
-    plt.xlabel("Days")
-    title = "Confirmed Cases in " + county + \
-        ", " + state + " For The Past 100 Days"
-
-    plt.title(title)
-    plt.show()
-
-
-if __name__ == '__main__':
-    main()

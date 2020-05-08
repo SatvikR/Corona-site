@@ -37,7 +37,11 @@ def home():
         dump_data(state, county, file, x, y, 'data.json')
         return redirect(url_for("graph"))
     else:
-        return render_template("index.html")
+        file = corona.get_file(raw_data)
+        states = corona.get_states(file)
+        state_counties = corona.create_dict(states, file, raw_data)
+        print(len(state_counties))
+        return render_template("index.html", states=states, len=len(states), state_counties=state_counties)
 
 @app.route('/send', methods=["POST", "GET"])
 def send():
