@@ -11,3 +11,4 @@ This website is made with a flask (python) backend and HTML/JS front-end.
 
 I use d3.js for the graph
 
+The code on github is still in testing, I am working on adding a dynamic dropdown list
