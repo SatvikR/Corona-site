@@ -52,11 +52,8 @@ def get_states(file):
             states.append(row['Province_State'])
     return states
 
-def create_dict(states, file, raw_data):
-    state_counties = {}
-    length = 0
-    for state in states:
-        file = get_file(raw_data)
-        state_counties[state] = get_counties(state, file)
-    return state_counties
-
+def create_dict(keys, values, file, raw_data):
+    file = get_file(raw_data)
+    for row in file:
+        keys.append(row['Province_State'])
+        values.append(row['Admin2'])

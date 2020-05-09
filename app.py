@@ -39,9 +39,10 @@ def home():
     else:
         file = corona.get_file(raw_data)
         states = corona.get_states(file)
-        state_counties = corona.create_dict(states, file, raw_data)
-        print(len(state_counties))
-        return render_template("index.html", states=states, len=len(states), state_counties=state_counties)
+        keys = []
+        values = []
+        corona.create_dict(keys, values, file, raw_data)
+        return render_template("index.html", states=states, len=len(states), len2=len(keys), keys=keys, values=values)
 
 @app.route('/send', methods=["POST", "GET"])
 def send():

@@ -18,45 +18,13 @@
             <h1>Satvik's Coronavirus Plotter</h1>
             <form action="#" method="POST">
                 <div class="form-group">
-                    <select class="form-control" name="state" onchange="" id="state" >
+                    <select class="form-control" name="state" onchange="change_list()" id="state" >
                         {% for i in range(0, len) %}
                             <option value"{{states[i]}}">{{states[i]}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <script type="text/javascript">
-                        /**
-                         *                 <label for="exampleInputPassword1">County/City</label>
-                            <input type="county" class="form-control" id="exampleInputPassword1" name="county">*/
-                        var states = "{{states}}";
-                        var state_counties = '{{state_counties}}'
-                        while (states.includes("&#39;")) {
-                            states.replace("&#39;", "'")
-                        }
-                        while (state_counties.includes("&#39;")) {
-                            state_counties.replace("&#39;", "'")
-                        }
-                        states = JSON.parse(states.replace(/&#39;/g,'"'));
-                        state_counties = JSON.parse(state_counties.replace(/&#39;/g,'"'));
-                        for (let state in states) {
-                            for (let county in state_counties[state]) {
-                                county.replace(/&#34;/g, '""');
-                                result.replace(/(&quot\;)/g,"\"");
-                                console.log("here");
-                            }
-                        }
-                        
-                        function myFunction() {
-                            var state = document.getElementById("state").value;
-                            for (let county in state_counties[state]){
-                                var x = document.getElementById("mySelect");
-                                var option = document.createElement("option");
-                                option.text = county;
-                                x.add(option);
-                            }
-                        }
-                    </script>
                     <select class="form-control" id="mySelect" name="county">
 
                     </select>
@@ -65,7 +33,34 @@
                 <button type="submit" name="submit" value="county" class="btn btn-primary">See Available Counties/Regions</button>
             </form>
         </div>
-        
+        <script type="text/javascript">
+            var state_counties = [];
+
+            {% for i in range(0, len2) %}
+            state_counties.push({
+                state: '{{keys[i]}}',
+                county: '{{values[i]}}'
+            });
+            {% endfor %}
+
+            function change_list() {
+                var select = document.getElementById("mySelect");
+                var length = select.options.length;
+                for (i = length-1; i >= 0; i--) {
+                    select.options[i] = null;
+                }
+                var state = document.getElementById("state").value;
+                for (let i = 0; i < state_counties.length; i++) {
+                    let pair = state_counties[i]
+                    if (state === pair.state) {
+                        var x = document.getElementById("mySelect");
+                        var option = document.createElement("option");
+                        option.text = pair.county;
+                        x.add(option);
+                    }
+                }
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
