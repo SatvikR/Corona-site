@@ -19,6 +19,7 @@
             <form action="#" method="POST">
                 <div class="form-group">
                     <select class="form-control" name="state" onchange="change_list()" id="state" >
+                        <option value="default">Select a State</option>
                         {% for i in range(0, len) %}
                             <option value"{{states[i]}}">{{states[i]}}</option>
                         {% endfor %}
@@ -26,11 +27,11 @@
                 </div>
                 <div class="form-group">
                     <select class="form-control" id="mySelect" name="county">
-
+                        <option value="county">Select a County</option>
                     </select>
                 </div>
                 <button type="submit" name="submit" value="submit" class="btn btn-primary">See Graph</button>
-                <button type="submit" name="submit" value="county" class="btn btn-primary">See Available Counties/Regions</button>
+                <!--<button type="submit" name="submit" value="county" class="btn btn-primary">See Available Counties/Regions</button>-->
             </form>
         </div>
         <script type="text/javascript">
@@ -50,6 +51,13 @@
                     select.options[i] = null;
                 }
                 var state = document.getElementById("state").value;
+                if (state == "default") {
+                    var x = document.getElementById("mySelect");
+                    var option = document.createElement("option");
+                    option.text = "Select a County";
+                    x.add(option);
+                    return;
+                }
                 for (let i = 0; i < state_counties.length; i++) {
                     let pair = state_counties[i]
                     if (state === pair.state) {
