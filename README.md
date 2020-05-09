@@ -13,4 +13,4 @@ I use d3.js for the graph
 
 Latest Addition:
     
-    - For easier usability, I added a dynamic dropdown list
+- For easier usability, I added a dynamic dropdown list
