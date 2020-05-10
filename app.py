@@ -9,6 +9,7 @@ app.secret_key = "sfdhsdklfjwerjfcksldfjkdlsfjekl"
 raw_data = (
     "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv"
 )
+selected = 'False'
 
 def dump_data(state, county, file, x, y, json_file):
     corona.get_data(x, y, file, state, county)
@@ -25,24 +26,57 @@ def dump_data(state, county, file, x, y, json_file):
 
 @app.route('/', methods=["POST", "GET"])
 def home():
+    ''''global selected
+    if not selected:
+        file = corona.get_file(raw_data)
+        states = corona.get_states(file)
+        keys = []
+        values = []
+        corona.create_dict(keys, values, file, raw_data)
+        return render_template("index.html", states=states, len=len(states), len2=len(keys), keys=keys, values=values, seleceted=selected)
+    else:'''
+
+    global selected
     if request.method == "POST":
-        if request.form['submit'] == 'county':
-            return redirect(url_for("counties"))
         state = request.form['state']
         county = request.form['county']
+        if state == 'default' or county == 'county':
+            data = json.load(open('data.json'))
+            jtopy = json.dumps(data) 
+            dict_json = json.loads(jtopy) 
+            state = dict_json['state']
+            county = dict_json['county']
         print(state, county)
         file = corona.get_file(raw_data)
         x = []
         y = []
         dump_data(state, county, file, x, y, 'data.json')
-        return redirect(url_for("graph"))
+
+        selected = 'True'
+        file = corona.get_file(raw_data)
+        states = corona.get_states(file)
+        keys = []
+        values = []
+        corona.create_dict(keys, values, file, raw_data)
+        print(selected)
+        return render_template("index.html", states=states, len=len(states), len2=len(keys), keys=keys, values=values, selected='True')
     else:
         file = corona.get_file(raw_data)
         states = corona.get_states(file)
         keys = []
         values = []
         corona.create_dict(keys, values, file, raw_data)
-        return render_template("index.html", states=states, len=len(states), len2=len(keys), keys=keys, values=values)
+        file = corona.get_file(raw_data)
+        x = []
+        y = []    
+        data = json.load(open('data.json'))
+        jtopy = json.dumps(data) 
+        dict_json = json.loads(jtopy) 
+        state = dict_json['state']
+        county = dict_json['county']
+
+        dump_data(state, county, file, x, y, 'data.json')
+        return render_template("index.html", states=states, len=len(states), len2=len(keys), keys=keys, values=values, selected=selected) 
 
 @app.route('/send', methods=["POST", "GET"])
 def send():

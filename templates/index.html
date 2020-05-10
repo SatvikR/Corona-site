@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>Satvik's Coronavirus Plotter</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
         {% with messages = get_flashed_messages() %}
@@ -13,7 +14,7 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
-        
+        <frame>
         <div class="container">
             <h1>Satvik's Coronavirus Plotter</h1>
             <form action="#" method="POST">
@@ -34,6 +35,24 @@
                 <!--<button type="submit" name="submit" value="county" class="btn btn-primary">See Available Counties/Regions</button>-->
             </form>
         </div>
+        </frame>
+        <div class="container">
+            <div class="embed-responsive embed-responsive-1by1">
+                <div class="row">
+                    <div class="iframe_display">
+                    <iframe src="http://127.0.0.1:5000/graph#" class="embed-responsive-item" ></iframe>
+                    </div>
+                    <!--<iframe src="http://127.0.0.1:5000/graph#" class="embed-responsive-item" style="display: none;" onload="this.style.display='block'"></iframe>-->
+                    <!--<iframe style="position: absolute; top: -9999em; visibility: hidden;" onload="this.style.position='static'; this.style.visibility='visible';" src="http://127.0.0.1:5000/graph#"></iframe>-->
+                </div>
+            </div>
+        </div>
+
+        <script>
+        $(function(){
+            $('#iframe_wrapper').removeClass('iframe_display');
+        });
+        </script>
         <script type="text/javascript">
             var state_counties = [];
 

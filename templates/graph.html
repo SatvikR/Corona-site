@@ -6,15 +6,6 @@
     </head>
     <body>
         <div class="container-fluid">
-            <h1>Graph</h1>
-            <h2>State: {{state}}</h2>
-            <h2>County/Region: {{county}}</h2>
-            <form action="#" method="post">
-                <button type="submit" name="submit" value="submit" class="btn btn-primary">Back to Home</button>
-            </form>
-            
-        </div>
-        <div class="container-fluid">
             <div class="row">
                 <div class="col">
                     <div id="scatter"></div>
@@ -53,8 +44,8 @@
                 left: 40
             }
             // format the dat
-            width = 900 - margin.left - margin.right;
-            height = 700 - margin.top - margin.bottom;
+            width = 600 - margin.left - margin.right;
+            height = 450 - margin.top - margin.bottom;
             var x = d3.scaleLinear().range([0, width]);
             var y = d3.scaleLinear().range([height, 0]);
             // Scale the range of the data
@@ -85,19 +76,6 @@
                 .attr("stroke", "#3e14d9")
                 .attr("stroke-width", 2)
                 .attr("fill", "#FFFFFF");
-            var path = svg.selectAll("dot")
-                .data(data)
-                .enter().append("circle")
-                .attr("r", 0)
-                .attr("cx", function (d) {
-                    return x(d.date);
-                })
-                .attr("cy", function (d) {
-                    return y(d.amount);
-                })
-                .attr("stroke", "#3e14d9")
-                .attr("stroke-width", 1.5)
-                .attr("fill", "#FFFFFF");
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
@@ -109,7 +87,7 @@
                 .attr("x", (width / 2))             
                 .attr("y", 0 - (margin.top / 2))
                 .attr("text-anchor", "middle")  
-                .style("font-size", "20px") 
+                .style("font-size", "16px") 
                 .style("text-decoration", "underline")  
                 .text(title);
         </script>
