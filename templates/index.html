@@ -5,6 +5,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Coronavirus Plotter</a>
+            
+              
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+              </ul>
+            </div>
+          </nav>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         {% for message in messages %}
@@ -14,7 +23,16 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
-        <frame>
+        <div class="container">
+            <div class="">
+                    <div class="iframe_display">
+			    <p><br><br><br></p> 
+                    <iframe src="http://satvikreddy.com/graph#" class="embed-responsive-item" width="1110px" height="525px" frameborder="0"></iframe>
+                    <!--<iframe src="http://127.0.0.1:5000/graph#" class="embed-responsive-item" style="display: none;" onload="this.style.display='block'"></iframe>-->
+                    <!--<iframe style="position: absolute; top: -9999em; visibility: hidden;" onload="this.style.position='static'; this.style.visibility='visible';" src="http://127.0.0.1:5000/graph#"></iframe>-->
+                </div>
+            </div>
+        </div>
         <div class="container">
             <h1>Satvik's Coronavirus Plotter</h1>
             <form action="#" method="POST">
@@ -35,24 +53,12 @@
                 <!--<button type="submit" name="submit" value="county" class="btn btn-primary">See Available Counties/Regions</button>-->
             </form>
         </div>
-        </frame>
-        <div class="container">
-            <div class="embed-responsive embed-responsive-1by1">
-                <div class="row">
-                    <div class="iframe_display">
-                    <iframe src="http://127.0.0.1:5000/graph#" class="embed-responsive-item" ></iframe>
-                    </div>
-                    <!--<iframe src="http://127.0.0.1:5000/graph#" class="embed-responsive-item" style="display: none;" onload="this.style.display='block'"></iframe>-->
-                    <!--<iframe style="position: absolute; top: -9999em; visibility: hidden;" onload="this.style.position='static'; this.style.visibility='visible';" src="http://127.0.0.1:5000/graph#"></iframe>-->
-                </div>
-            </div>
-        </div>
 
         <script>
-        $(function(){
-            $('#iframe_wrapper').removeClass('iframe_display');
-        });
-        </script>
+		if ( window.history.replaceState ) {
+			window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
         <script type="text/javascript">
             var state_counties = [];
 
