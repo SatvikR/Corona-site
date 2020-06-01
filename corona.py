@@ -14,7 +14,7 @@ def get_data(x, y, file, state, county):
                 i += 1
                 if i >= 12:
                     x.append(i - 11)
-                    y.append(int(value))
+                    y.append(int(float(value)))
             break
 
 
