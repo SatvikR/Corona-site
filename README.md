@@ -1,8 +1,6 @@
 # Corona-site
 Coronavirus-tracker website
 
-The URL is http://satvikreddy.com/
-
 The actual data grabbing script is from my other repo. Check it out here: https://github.com/SatvikR/Coronavirus-visualization-python
 
 All the raw data is from https://github.com/CSSEGISandData/COVID-19
